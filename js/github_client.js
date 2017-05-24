@@ -1,21 +1,14 @@
 //define functions here
 var baseUrl = 'https://api.github.com/'
-var file_name = $('#file_name').val()
-var token = $('#token').val()
 
 var createGist = function(file_name, content, description, token){
 
   var newGist = {
     "public": true,
-    "description": $('#description').val(),
-    "files": {
-      file_name: {
-        "content": $('#content').val()
-      }
+    "description": description,
+    "files": {}
     }
-  }
-
-// The JSON.stringify() method converts a JavaScript value to a JSON string, optionally replacing values if a replacer function is specified, or optionally including only the specified properties if a replacer array is specified.
+    newGist[files][file_name]= {"content": content}
 
   $.ajax({
     type: 'POST',
@@ -50,14 +43,21 @@ var myGists = function (username, token){
 }
 
 var bindCreateButton = function() {
-  $('#add_gist').on('click', createGist())
-  // $('#link').on('click', myGists())
+  $('#add_gist').on('click', function(event){
+    event.preventDefault()
+    createGist(file_name, content, description, token)
+    var file_name = $('#file_name').val()
+    var token = $('#token').val()
+    var description = $('#description').val()
+    var content = $('#content').val()
+  })
 }
 
 function addGistToDom(gist) {
     $("#gists").append('<li>' + gist.description + '</li>')
 }
 
-$(document).ready(function(){
+$(document).ready(function(e){
+  e.preventDefault
   bindCreateButton()
 })
