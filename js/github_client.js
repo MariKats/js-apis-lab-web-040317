@@ -8,7 +8,7 @@ var createGist = function(file_name, content, description, token){
     "description": description,
     "files": {}
     }
-    newGist[files][file_name]= {"content": content}
+    newGist["files"][file_name]= {"content": content}
 
   $.ajax({
     type: 'POST',
